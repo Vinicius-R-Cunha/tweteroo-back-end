@@ -11,16 +11,26 @@ let avatar;
 
 app.post('/sign-up', (req, res) => {
     const user = req.body;
-    avatar = user.avatar;
-    users.push(user);
-    res.send("OK");
+    if (user.username === '' || user.avatar === '') {
+        res.sendStatus(400);
+        res.send("Todos os campos são obrigatórios!");
+    } else {
+        avatar = user.avatar;
+        users.push(user);
+        res.send("OK");
+    }
 });
 
 app.post('/tweets', (req, res) => {
     const tweet = req.body;
-    const tweetWithAvatar = { ...tweet, avatar };
-    tweets.push(tweetWithAvatar);
-    res.send("OK");
+    if (tweet.username === '' || tweet.tweet === '') {
+        res.sendStatus(400);
+        res.send("Todos os campos são obrigatórios!");
+    } else {
+        const tweetWithAvatar = { ...tweet, avatar };
+        tweets.push(tweetWithAvatar);
+        res.send("OK");
+    }
 });
 
 app.get('/tweets', (req, res) => {
